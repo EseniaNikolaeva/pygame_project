@@ -86,7 +86,7 @@ while True:
             pygame.quit()
             sys.exit()
 
-    if lives == -1:
+    if lives < 0:
         score = 0
         lives = 3
     for i in range(15):
@@ -195,9 +195,9 @@ while True:
         screen.blit(img_kosmos, (0, 0))
         if lives == 0:
             screen.blit(img_boom, (100, 50))
-            lives -= 1
             pygame.display.flip()
             pygame.time.delay(1000)
+            lives = 3
         for i in range(lives):
             screen.blit(img_heart, (850 + i * 45, 7))
         screen.blit(img_spaceship, (x, y))
