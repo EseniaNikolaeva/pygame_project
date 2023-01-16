@@ -20,6 +20,7 @@ vx = 0
 rect_color = (219, 112, 147)
 # размер
 length = 50
+
 # картинка
 img_spaceship = pygame.image.load("spaceship.png")
 img_spaceship = pygame.transform.smoothscale(img_spaceship, (65, 45))
