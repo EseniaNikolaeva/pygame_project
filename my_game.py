@@ -86,9 +86,6 @@ while True:
             pygame.quit()
             sys.exit()
 
-    if lives < 0:
-        score = 0
-        lives = 3
     for i in range(15):
         meteors_y[i] -= HEIGHT
     end = False
@@ -198,6 +195,7 @@ while True:
             pygame.display.flip()
             pygame.time.delay(1000)
             lives = 3
+            score = 0
         for i in range(lives):
             screen.blit(img_heart, (850 + i * 45, 7))
         screen.blit(img_spaceship, (x, y))
