@@ -1,3 +1,4 @@
+import sys
 import random
 
 import pygame
@@ -62,6 +63,10 @@ img_heart = pygame.transform.smoothscale(heart, (40, 40))
 kosmos = pygame.image.load("kosmos.jpg")
 img_kosmos = pygame.transform.smoothscale(kosmos, (1000, 800))
 
+#конец
+boom = pygame.image.load("boom.png")
+img_boom = pygame.transform.smoothscale(boom, (800, 700))
+
 for i in range(15):
     xm = random.randint(0, WIDTH)
     ym = - 2 * meteor_rad + 1
@@ -81,7 +86,7 @@ while True:
             pygame.quit()
             sys.exit()
 
-    if lives == 0:
+    if lives == -1:
         score = 0
         lives = 3
     for i in range(15):
@@ -188,6 +193,11 @@ while True:
 
         screen.fill('#2D143E')
         screen.blit(img_kosmos, (0, 0))
+        if lives == 0:
+            screen.blit(img_boom, (100, 50))
+            lives -= 1
+            pygame.display.flip()
+            pygame.time.delay(1000)
         for i in range(lives):
             screen.blit(img_heart, (850 + i * 45, 7))
         screen.blit(img_spaceship, (x, y))
