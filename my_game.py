@@ -1,4 +1,3 @@
-import sys
 import random
 
 import pygame
@@ -85,19 +84,34 @@ for i in range(15):
     meteors_vx.append(vx)
 
 def game_over():
+    global max_score
     screen.blit(img_end, (0, 0))
+    my_font = pygame.font.SysFont('Arial', 70)
+    t = my_font.render('Спасибо, что выбрали нашу игру!', True, ('#08E8DE'))
+    screen.blit(t, (50, 20))
+    my_font = pygame.font.SysFont('Arial', 60)
+    t = my_font.render(f'Ваш рекорд: {max_score}', True, ('#08E8DE'))
+    screen.blit(t, (350, 150))
+    my_font = pygame.font.SysFont('Arial', 40)
+    t = my_font.render('Если хотите продолжить игру, нажмите пробел', True, ('#08E8DE'))
+    screen.blit(t, (150, 300))
+    img_spaceship = pygame.image.load("spaceship.png")
+    img_spaceship = pygame.transform.smoothscale(img_spaceship, (140, 100))
+    screen.blit(img_spaceship, (450, 500))
     pygame.display.flip()
     waiting = True
     while waiting:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                exit()
             if event.type == pygame.KEYUP:
                 waiting = False
 
 lives = 3
 score = 0
 sound = 1
+max_score = 0
 while True:
     for i in range(15):
         meteors_y[i] -= HEIGHT
@@ -211,6 +225,8 @@ while True:
         screen.fill('#2D143E')
         screen.blit(img_kosmos, (0, 0))
         if lives == 0:
+            if max_score < score:
+                max_score = score
             score = 0
             screen.blit(img_boom, (100, 50))
             if sound:
