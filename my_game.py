@@ -96,7 +96,10 @@ while True:
             if e.type == pygame.QUIT:
                 exit()
             elif e.type == pygame.KEYDOWN:
-                if e.key == pygame.K_d:
+                if e.key == pygame.K_SPACE:
+                    if lives == 0:
+                        lives = 3
+                elif e.key == pygame.K_d:
                     bullets_y.append(y + length // 2)
                     bullets_x.append(x + length // 2)
                     bullets_vy.append(0)
@@ -191,35 +194,35 @@ while True:
         screen.fill('#2D143E')
         screen.blit(img_kosmos, (0, 0))
         if lives == 0:
+            score = 0
             screen.blit(img_boom, (100, 50))
             pygame.display.flip()
-            pygame.time.delay(1000)
-            lives = 3
-            score = 0
+
         for i in range(lives):
             screen.blit(img_heart, (850 + i * 45, 7))
-        screen.blit(img_spaceship, (x, y))
-        for i in range(len(meteors_y)):
-            xm = meteors_x[i] - meteor_rad
-            ym = meteors_y[i] - meteor_rad
-            screen.blit(img_meteor, (xm, ym))
+        if lives != 0:
+            screen.blit(img_spaceship, (x, y))
+            for i in range(len(meteors_y)):
+                xm = meteors_x[i] - meteor_rad
+                ym = meteors_y[i] - meteor_rad
+                screen.blit(img_meteor, (xm, ym))
 
-        for i in range(len(bullets_y)):
-            xb = bullets_x[i] - bullet_rad
-            yb = bullets_y[i] - bullet_rad
-            if bullets_vx[i] == -10:
-                img = img_bullet_l
-            elif bullets_vx[i] == 10:
-                img = img_bullet_r
-            elif bullets_vy[i] == 10:
-                img = img_bullet_d
-            else:
-                img = img_bullet_t
-            screen.blit(img, (xb + 5, yb))
+            for i in range(len(bullets_y)):
+                xb = bullets_x[i] - bullet_rad
+                yb = bullets_y[i] - bullet_rad
+                if bullets_vx[i] == -10:
+                    img = img_bullet_l
+                elif bullets_vx[i] == 10:
+                    img = img_bullet_r
+                elif bullets_vy[i] == 10:
+                    img = img_bullet_d
+                else:
+                    img = img_bullet_t
+                screen.blit(img, (xb + 5, yb))
 
-        my_font = pygame.font.SysFont('Arial', 50)
-        t = my_font.render(str(score), True, (233, 213, 196))
-        screen.blit(t, (20, 20))
+            my_font = pygame.font.SysFont('Arial', 50)
+            t = my_font.render(str(score), True, (233, 213, 196))
+            screen.blit(t, (20, 20))
 
         pygame.display.flip()
         pygame.time.delay(10)
