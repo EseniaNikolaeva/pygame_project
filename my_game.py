@@ -54,9 +54,10 @@ img_bullet_d = pygame.transform.smoothscale(img_bullet_d, (20, 20))
 # звуки
 piu = mixer.Sound('piu.wav')
 flight = mixer.Sound('flight.wav')
-flight.set_volume(0.2)
+flight.set_volume(0.1)
 dead = mixer.Sound('boom.wav')
 dead.set_volume(2.5)
+background_music = mixer.Sound('music.mp3')
 
 # жизни
 heart = pygame.image.load("heart.png")
@@ -85,13 +86,18 @@ for i in range(15):
 
 def game_over():
     global max_score
+    global background_music
+
+    background_music.set_volume(0.5)
+    background_music.play()
+
     screen.blit(img_end, (0, 0))
     my_font = pygame.font.SysFont('Arial', 70)
     t = my_font.render('Спасибо, что выбрали нашу игру!', True, ('#08E8DE'))
     screen.blit(t, (50, 20))
     my_font = pygame.font.SysFont('Arial', 60)
     t = my_font.render(f'Ваш рекорд: {max_score}', True, ('#08E8DE'))
-    screen.blit(t, (350, 150))
+    screen.blit(t, (310, 150))
     my_font = pygame.font.SysFont('Arial', 40)
     t = my_font.render('Если хотите продолжить игру, нажмите пробел', True, ('#08E8DE'))
     screen.blit(t, (150, 300))
@@ -107,6 +113,8 @@ def game_over():
                 exit()
             if event.type == pygame.KEYUP:
                 waiting = False
+                background_music.set_volume(0)
+
 
 lives = 3
 score = 0
@@ -116,9 +124,10 @@ while True:
     for i in range(15):
         meteors_y[i] -= HEIGHT
     end = False
-
     while not end:
         score = score + 1
+        if lives != 0:
+            sound = 1
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 game_over()
