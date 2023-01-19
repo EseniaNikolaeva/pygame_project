@@ -54,6 +54,10 @@ img_bullet_d = pygame.transform.smoothscale(img_bullet_d, (20, 20))
 
 # звуки
 piu = mixer.Sound('piu.wav')
+flight = mixer.Sound('flight.wav')
+flight.set_volume(0.2)
+dead = mixer.Sound('boom.wav')
+dead.set_volume(2.5)
 
 # жизни
 heart = pygame.image.load("heart.png")
@@ -80,6 +84,7 @@ for i in range(15):
 
 lives = 3
 score = 0
+sound = 1
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -127,12 +132,16 @@ while True:
         pressed_keys = pygame.key.get_pressed()
         if pressed_keys[pygame.K_LEFT]:
             x = x - 3
+            flight.play()
         if pressed_keys[pygame.K_RIGHT]:
             x = x + 3
+            flight.play()
         if pressed_keys[pygame.K_UP]:
             y = y - 3
+            flight.play()
         if pressed_keys[pygame.K_DOWN]:
             y = y + 3
+            flight.play()
 
         if x > WIDTH:
             x = 0 - length
@@ -196,6 +205,9 @@ while True:
         if lives == 0:
             score = 0
             screen.blit(img_boom, (100, 50))
+            if sound:
+                dead.play()
+                sound = 0
             pygame.display.flip()
 
         for i in range(lives):
