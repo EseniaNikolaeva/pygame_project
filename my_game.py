@@ -88,7 +88,7 @@ def game_over():
     global max_score
     global background_music
 
-    background_music.set_volume(0.5)
+    background_music.set_volume(0.7)
     background_music.play()
 
     screen.blit(img_end, (0, 0))
