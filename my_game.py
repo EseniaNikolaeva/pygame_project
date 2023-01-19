@@ -66,6 +66,8 @@ img_heart = pygame.transform.smoothscale(heart, (40, 40))
 # фон
 kosmos = pygame.image.load("kosmos.jpg")
 img_kosmos = pygame.transform.smoothscale(kosmos, (1000, 800))
+end = pygame.image.load("end.jpg")
+img_end = pygame.transform.smoothscale(end, (1000, 800))
 
 #конец
 boom = pygame.image.load("boom.png")
@@ -82,15 +84,21 @@ for i in range(15):
     meteors_vy.append(vy)
     meteors_vx.append(vx)
 
+def game_over():
+    screen.blit(img_end, (0, 0))
+    pygame.display.flip()
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.KEYUP:
+                waiting = False
+
 lives = 3
 score = 0
 sound = 1
 while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-
     for i in range(15):
         meteors_y[i] -= HEIGHT
     end = False
@@ -99,7 +107,7 @@ while True:
         score = score + 1
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
-                exit()
+                game_over()
             elif e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_SPACE:
                     if lives == 0:
